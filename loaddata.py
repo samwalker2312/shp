@@ -9,7 +9,6 @@ def loaduds(ID):
     dataset = pd.read_csv('K_selected_uds_photoz_masses_photom_upload.cat', header=0, delim_whitespace=True, index_col=0)
     #IDcol = np.genfromtxt('K_selected_uds_photoz_masses_photom_upload.cat', skip_header=2, usecols=0)
 
-
     #extracts ra and dec columns
     #coords = dataset.loc[ID,'RA':'Dec']
 
