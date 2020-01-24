@@ -62,7 +62,11 @@ def analysisfunc(fit):
 	posterior = fit.posterior.samples["spectrum_full"]
 	spectrum = np.median(posterior, axis=0)
 	data = np.c_[wavs, spectrum]
-	fname = 'G13_spectra/' + ID + '_spectrum.dat'
+
+	uvj = fit.posterior.samples["uvj"]
+	umag = np.median(uvj[:, 0])
+
+	fname = 'G13_spectra/' + ID + '_' + str(umag) + '_spectrum.dat'
 	np.savetxt(fname, data)
 
 
