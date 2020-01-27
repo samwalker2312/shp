@@ -72,7 +72,7 @@ def analysisfunc(fit):
 
 	umag_obs = umag + 5*np.log(distance)
 
-	fname = 'G13_spectra/' + ID + '_' + str(umag) + '_spectrum.dat'
+	fname = 'G13_spectra/' + ID + '_' + str(umag_obs) + '_spectrum.dat'
 	np.savetxt(fname, data)
 
 
