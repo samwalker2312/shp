@@ -2,6 +2,7 @@ from loaddata import load_goodss
 from loaddata import load_vandels_spec
 import bagpipes as pipes
 import numpy as np
+from astropy.cosmology import FlatLambdaCDM
 
 filt_list = np.loadtxt("filters_guo/goodss_filt_list.txt", dtype="str")
 
@@ -47,6 +48,7 @@ fit_instructions["dust"] = dust
 fit_instructions["t_bc"] = 0.01
 fit_instructions["nebular"] = nebular
 
+cosmo = FlatLambdaCDM(H0=70, Om0 = .3, Tcmb0=2.725)
 def analysisfunc(fit):
 	ID = str(fit.galaxy.ID)
 	fit.posterior.get_advanced_quantities()
@@ -57,14 +59,18 @@ def analysisfunc(fit):
 		redshift = fit.fitted_model.model_components["redshift"]
 
 	# Plot the posterior photometry and full spectrum.
-	wavs = (fit.posterior.model_galaxy.wavelengths*(1.+redshift))*10
+	wavs = (fit.posterior.model_galaxy.wavelengths)*10
 
 	posterior = fit.posterior.samples["spectrum_full"]
 	spectrum = np.median(posterior, axis=0)
 	data = np.c_[wavs, spectrum]
 
+	distance = cosmo.luminosity_distance(redshift).value*(10**5)
+
 	uvj = fit.posterior.samples["uvj"]
 	umag = np.median(uvj[:, 0])
+
+	umag_obs = umag + 5*np.log(distance)
 
 	fname = 'G13_spectra/' + ID + '_' + str(umag) + '_spectrum.dat'
 	np.savetxt(fname, data)
