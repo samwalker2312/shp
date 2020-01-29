@@ -59,7 +59,7 @@ def analysisfunc(fit):
 		redshift = fit.fitted_model.model_components["redshift"]
 
 	# Plot the posterior photometry and full spectrum.
-	wavs = (fit.posterior.model_galaxy.wavelengths)*10
+	wavs = (fit.posterior.model_galaxy.wavelengths)*(1+redshift)*10
 
 	posterior = fit.posterior.samples["spectrum_full"]
 	spectrum = np.median(posterior, axis=0)
@@ -72,7 +72,7 @@ def analysisfunc(fit):
 
 	umag_obs = umag + 5*np.log(distance)
 
-	fname = 'G13_spectra/' + ID + '_' + str(umag_obs) + '_spectrum.dat'
+	fname = 'G13_spectra/' + ID + '_spectrum.dat'
 	np.savetxt(fname, data)
 
 
@@ -80,4 +80,4 @@ def analysisfunc(fit):
 IDs = np.array([2408,1424,2782,18180,8785,22211,22085,3973,9209])
 fit_cat = pipes.fit_catalogue(IDs, fit_instructions, load_goodss,\
  spectrum_exists=False, cat_filt_list=filt_list, run="guo_2020atopten", make_plots = True, analysis_function=analysisfunc, full_catalogue=True)
-fit_cat.fit(verbose=False)
+fit_cat.fit(verbose=False, n_live = 1000)
