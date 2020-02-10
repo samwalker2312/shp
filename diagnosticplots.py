@@ -26,25 +26,35 @@ data = data.loc[IDs, :]
 print(data.shape)
 print(fitted_data.shape)
 
+fitted_data['SFR_50'][fitted_data['SFR_50'] < 0.01] = 0.01
+fitted_data['sSFR_50'][fitted_data['sSFR_50'] < -12] = -12
+
+zlessthan1 = fitted_data[fitted_data['redshift_50'] < 1]
+print(zlessthan1.shape)
 zmed = np.array(data['zmed'])
-plt.plot(fitted_data['redshift_50'], zmed, 'o')
+plt.plot(np.ones_like(zmed), zmed, ':', color='black')
+plt.plot(fitted_data['redshift_50'], zmed, 'o', markersize=2)
 plt.xlabel('Fitted median redshift')
 plt.ylabel("Derek's redshift")
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
 plt.plot(fitted_data['stellar_mass_50'], data['log10(Mass_iso)'], 'o')
 plt.xlabel('Fitted stellar mass')
 plt.ylabel("Derek's mass")
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
 plt.plot(np.log10(fitted_data['SFR_50']), data['log10(SFR_iso)'],'o')
 plt.xlabel('Fitted log(SFR)')
 plt.ylabel("Derek's log(SFR)")
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
 plt.plot(fitted_data['sSFR_50'], data['log10(sSFR_iso)'],'o')
 plt.xlabel('Fitted log(sSFR)')
 plt.ylabel("Derek's log(sSFR)")
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 
 plt.plot(fitted_data['stellar_mass_50'],np.log10(fitted_data['SFR_50']), 'o')
