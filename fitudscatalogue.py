@@ -49,6 +49,7 @@ fit_instructions["redshift_prior"] = 'uniform'
 fit_instructions["dblplaw"] = dblplaw
 fit_instructions["dust"] = dust
 fit_instructions["nebular"] = nebular
+fit_instructions["t_bc"] = 2.
 
 ########### calculate IDs for fitting here
 data = pd.read_csv('K_selected_uds_photoz_masses_photom_upload.cat', header=0, delim_whitespace=True, index_col=0)
