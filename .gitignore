@@ -12,7 +12,7 @@ K_selected_uds_photoz_masses_photom_readme.txt
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.fits
 # C extensions
 *.so
 

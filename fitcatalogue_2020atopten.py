@@ -59,7 +59,7 @@ def analysisfunc(fit):
 		redshift = fit.fitted_model.model_components["redshift"]
 
 	# Plot the posterior photometry and full spectrum.
-	wavs = (fit.posterior.model_galaxy.wavelengths)*(1+redshift)*10
+	wavs = (fit.posterior.model_galaxy.wavelengths)*(1+redshift)/10
 
 	posterior = fit.posterior.samples["spectrum_full"]
 	spectrum = np.median(posterior, axis=0)
