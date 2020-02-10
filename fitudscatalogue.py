@@ -61,4 +61,4 @@ print(len(IDs))
 
 fit_cat = pipes.fit_catalogue(IDs, fit_instructions, loaduds,\
  spectrum_exists=False, cat_filt_list=filt_list, run="uds_20to23kmag_zabove1", make_plots =False, full_catalogue=True)
-#fit_cat.fit(verbose=False, n_live=1000, mpi_serial = True)
+fit_cat.fit(verbose=False, n_live=1000, mpi_serial = True)
