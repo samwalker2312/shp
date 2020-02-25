@@ -53,13 +53,14 @@ fit_instructions["t_bc"] = 2.
 
 ########### calculate IDs for fitting here
 data = pd.read_csv('K_selected_uds_photoz_masses_photom_upload.cat', header=0, delim_whitespace=True, index_col=0)
-k_mag = data['K_iso'].apply(magnitudecalc)
+data['k_mag'] = data['K_iso'].apply(magnitudecalc)
 #print(k_mag)
 fluxes = data.loc[:,['U_2as', 'B_2as', 'V_2as', 'R_2as', 'i_2as', 'znew_2as', 'Y_2as', 'J_2as', 'H_2as', 'K_2as', 'ch1_flux', 'ch2_flux']]
 data['filter'] = np.sum(fluxes.values == -99., axis=1)
-IDs = data.index[(data['zmed'] > 1) &(20 < k_mag) & (k_mag < 23) & (data['H_2as'] > -99) & (data['filter'] < 3)].tolist()
+sorted_data = data.sort_values('k_mag')
+IDs = sorted_data.index[(sorted_data['zmed'] > 1) &(20 < sorted_data['k_mag']) & (sorted_data['k_mag'] < 23) & (sorted_data['H_2as'] > -99) & (sorted_data['filter'] < 3)].tolist()
 print(len(IDs))
 
 fit_cat = pipes.fit_catalogue(IDs, fit_instructions, loaduds,\
- spectrum_exists=False, cat_filt_list=filt_list, run="uds_20to23kmag_zabove1", make_plots =False, full_catalogue=True)
+ spectrum_exists=False, cat_filt_list=filt_list, run="uds_newtest", make_plots =False, full_catalogue=True)
 fit_cat.fit(verbose=False, n_live=1000, mpi_serial = True)
