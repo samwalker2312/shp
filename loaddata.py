@@ -30,12 +30,12 @@ def loaduds(ID):
     fluxerrs[fluxerrs<-98] = 9.9*10**99.
     output = np.c_[fluxes, fluxerrs]
     for i in range(len(output)):
-	if i < len(fluxes_nonisophot):
-		max_snr = 20.
-	else:
-		max_snr = 10.
-	if output[i,0]/output[i,1]>max_snr:
-		output[i,1] = output[i,0]/max_snr
+        if i < len(fluxes_nonisophot):
+            max_snr = 20.
+        else:
+            max_snr = 10.
+        if output[i,0]/output[i,1]>max_snr:
+            output[i,1] = output[i,0]/max_snr
 
     print(output)
     return output
