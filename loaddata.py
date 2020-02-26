@@ -21,7 +21,7 @@ def loaduds(ID):
     isofactor = dataset.loc[ID,'isofactor']
 
     fluxes_nonisophot = isofactor*(dataset.loc[ID, ['U_2as', 'B_2as', 'V_2as', 'R_2as', 'i_2as', 'z_2as','znew_2as', 'Y_2as', 'J_2as', 'H_2as', 'K_2as']].to_numpy())
-    fluxerrs_nonisophot = isofactor*(dataset.loc[ID, ['U_2as_err', 'B_2as_err', 'V_2as_err', 'R_2as_err', 'i_2as_err', 'z_2as', 'znew_2as_err', 'Y_2as_err', 'J_2as_err', 'H_2as_err', 'K_2as_err']].to_numpy())
+    fluxerrs_nonisophot = isofactor*(dataset.loc[ID, ['U_2as_err', 'B_2as_err', 'V_2as_err', 'R_2as_err', 'i_2as_err', 'z_2as_err', 'znew_2as_err', 'Y_2as_err', 'J_2as_err', 'H_2as_err', 'K_2as_err']].to_numpy())
     fluxes_irac = dataset.loc[ID, ['ch1_flux', 'ch2_flux']].to_numpy()
     fluxerrs_irac = dataset.loc[ID, ['ch1_err', 'ch2_err']].to_numpy()
     fluxes = np.concatenate((fluxes_nonisophot, fluxes_irac))
