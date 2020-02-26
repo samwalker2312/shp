@@ -15,12 +15,13 @@ def loaduds(ID):
     #extracts values with z > 1 (presented as an example)
     #data = dataset[dataset['zmed'] > 1.]
     #data = data[data.index.isin(ID)]
+
     ID = int(ID)
 
     isofactor = dataset.loc[ID,'isofactor']
 
-    fluxes_nonisophot = isofactor*(dataset.loc[ID, ['U_2as', 'B_2as', 'V_2as', 'R_2as', 'i_2as', 'znew_2as', 'Y_2as', 'J_2as', 'H_2as', 'K_2as']].to_numpy())
-    fluxerrs_nonisophot = isofactor*(dataset.loc[ID, ['U_2as_err', 'B_2as_err', 'V_2as_err', 'R_2as_err', 'i_2as_err', 'znew_2as_err', 'Y_2as_err', 'J_2as_err', 'H_2as_err', 'K_2as_err']].to_numpy())
+    fluxes_nonisophot = isofactor*(dataset.loc[ID, ['U_2as', 'B_2as', 'V_2as', 'R_2as', 'i_2as', 'z_2as','znew_2as', 'Y_2as', 'J_2as', 'H_2as', 'K_2as']].to_numpy())
+    fluxerrs_nonisophot = isofactor*(dataset.loc[ID, ['U_2as_err', 'B_2as_err', 'V_2as_err', 'R_2as_err', 'i_2as_err', 'z_2as', 'znew_2as_err', 'Y_2as_err', 'J_2as_err', 'H_2as_err', 'K_2as_err']].to_numpy())
     fluxes_irac = dataset.loc[ID, ['ch1_flux', 'ch2_flux']].to_numpy()
     fluxerrs_irac = dataset.loc[ID, ['ch1_err', 'ch2_err']].to_numpy()
     fluxes = np.concatenate((fluxes_nonisophot, fluxes_irac))
@@ -28,6 +29,14 @@ def loaduds(ID):
     fluxes[fluxes<-98] = 0
     fluxerrs[fluxerrs<-98] = 9.9*10**99.
     output = np.c_[fluxes, fluxerrs]
+    for i in range(len(output)):
+	if i < len(fluxes_nonisophot):
+		max_snr = 20.
+	else:
+		max_snr = 10.
+	if output[i,0]/output[i,1]>max_snr:
+		output[i,1] = output[i,0]/max_snr
+
     print(output)
     return output
 
