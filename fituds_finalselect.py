@@ -52,15 +52,7 @@ fit_instructions["nebular"] = nebular
 fit_instructions['t_bc'] = 0.01
 
 ########### calculate IDs for fitting here
-data = pd.read_csv('K_selected_uds_photoz_masses_photom_upload.cat', header=0, delim_whitespace=True, index_col=0)
-data['k_mag'] = data['K_iso'].apply(magnitudecalc)
-#print(k_mag)
-fluxes = data.loc[:,['U_2as', 'B_2as', 'V_2as', 'R_2as', 'i_2as', 'z_2as', 'znew_2as', 'Y_2as', 'J_2as', 'H_2as', 'K_2as', 'ch1_flux', 'ch2_flux']]
-data['filter'] = np.sum(fluxes.values == -99., axis=1)
-#print(data['filter'])
-sorted_data = data.sort_values('k_mag')
-#IDs = sorted_data.index[(sorted_data['zmed'] > 1) &(20 < sorted_data['k_mag']) & (sorted_data['k_mag'] < 23) & (sorted_data['H_2as'] > -99) & (sorted_data['filter'] < 3)].tolist()
-IDs = sorted_data.index[(20 < sorted_data['k_mag']) & (sorted_data['k_mag'] < 23) & (sorted_data['H_2as'] > -99) & (sorted_data['filter'] < 3)].tolist()
+IDs = np.genfromtxt('masscut_indices.txt')
 print(len(IDs))
-fit_cat = pipes.fit_catalogue(IDs, fit_instructions, loaduds,spectrum_exists=False, cat_filt_list=filt_list, run="uds_20to23kmag", make_plots =False)
+fit_cat = pipes.fit_catalogue(IDs, fit_instructions, loaduds,spectrum_exists=False, cat_filt_list=filt_list, run="uds_20to23kmag", make_plots =False, full_catalogue = True)
 #fit_cat.fit(verbose=False, n_live=1000, mpi_serial = True)
