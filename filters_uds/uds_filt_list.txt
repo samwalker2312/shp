@@ -3,6 +3,7 @@ filters_uds/Subaru_Suprime_B
 filters_uds/Subaru_Suprime_V
 filters_uds/Subaru_Suprime_r
 filters_uds/Subaru_Suprime_i
+filters_uds/Subaru_Suprime_z
 filters_uds/Subaru_Suprime_z_FD
 filters_uds/Paranal_VISTA_Y
 filters_uds/UKIRT_UKIDSS_J
